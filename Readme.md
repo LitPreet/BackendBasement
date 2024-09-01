@@ -1,6 +1,6 @@
 # Backend Basement
 
-This is my personal backend development repository, ServerSmith. I'm using this space to learn, experiment, and build my skills in backend technologies. From APIs to databases, this repo will serve as my workshop as I dive into the world of server-side development.
+This is my personal backend development repository, I'm using this space to learn, experiment, and build my skills in backend technologies. From APIs to databases, this repo will serve as my workshop as I dive into the world of server-side development.
 
 ## Why This Repo Exists
 I'm starting my journey into backend development, and this repo is where I'll document my learning process. It's a place for me to try out new concepts, break things, and hopefully, build some cool projects along the way.
