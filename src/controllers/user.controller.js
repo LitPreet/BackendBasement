@@ -423,5 +423,4 @@ export {
   updateUserCoverImage,
   gerUserChannelProfile,
   getWatchHistory,
-  channel,
 };
