@@ -11,6 +11,7 @@ import {
   updateAccountDetails,
   updateUserAvatar,
   updateUserCoverImage,
+  verifyOTP,
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifJWT } from "../middlewares/auth.middleware.js";
@@ -31,6 +32,8 @@ router.route("/register").post(
   registerUser
 );
 
+router.route("/register").post(registerUser);
+router.route("/verify-otp").post(verifyOTP);
 router.route("/login").post(loginUser);
 
 //secured routes

@@ -25,13 +25,13 @@ const userSchema = new Schema(
       trim: true,
       index: true,
     },
-    avatar: {
-      type: String, //cloudinary url
-      required: true,
-    },
-    coverImage: {
-      type: String,
-    },
+    // avatar: {
+    //   type: String, //cloudinary url
+    //   required: true,
+    // },
+    // coverImage: {
+    //   type: String,
+    // },
     watchHistory: [
       {
         type: Schema.Types.ObjectId,
@@ -45,16 +45,22 @@ const userSchema = new Schema(
     refreshToken: {
       type: String,
     },
+    tokenVersion: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
 
+// Hash password before saving
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
+// Compare input password with hashed password
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
@@ -78,6 +84,7 @@ userSchema.methods.generateRefreshToken = function () {
  return jwt.sign(
     {
       _id: this._id,
+      tokenVersion: this.tokenVersion,
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
@@ -86,5 +93,13 @@ userSchema.methods.generateRefreshToken = function () {
   );
 };
 
+userSchema.methods.hashRefreshToken = async function (refreshToken) {
+  const salt = await bcrypt.genSalt(10);
+  this.refreshToken = await bcrypt.hash(refreshToken, salt);
+};
+
+userSchema.methods.isRefreshTokenCorrect = async function (refreshToken) {
+  return await bcrypt.compare(refreshToken, this.refreshToken);
+};
 
 export const User = mongoose.model("User", userSchema);
